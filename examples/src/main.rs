@@ -11,7 +11,7 @@ use objcache::{CacheError, Client, RedisCacheArgs, RedisClient};
 
 #[derive(Debug, Serialize, Deserialize)]
 struct Item {
-    val: usize,
+    value: usize,
 }
 
 #[derive(Debug)]
@@ -32,7 +32,7 @@ impl From<CacheError> for Error {
 }
 
 async fn get_item(v: usize) -> Result<Item, Error> {
-    Ok(Item { val: v })
+    Ok(Item { value: v })
 }
 
 #[tokio::main]
@@ -59,7 +59,7 @@ async fn main() -> Result<(), Error> {
     println!("{item:?}");
 
     let item = client.wrap(
-        |v| Box::pin(async move { Ok::<_, Error>(Item { val: v }) }),
+        |v| Box::pin(async move { Ok::<_, Error>(Item { value: v }) }),
         &RedisCacheArgs {
             lock_name: b"item_lock",
             key_name: b"item",
@@ -67,6 +67,8 @@ async fn main() -> Result<(), Error> {
         },
     )(100)
     .await?;
+
+    assert_eq!(item.value, 100);
 
     println!("{item:?}");
 
