@@ -14,7 +14,7 @@ members = ["examples"]
 tokio = { version = "1.*", default-features = false, features = [] }
 serde = { version = "1.0.*", default-features = false, features = ["std", "derive"] }
 chrono = { version = "0.4.*", default-features = false, features = ["std", "now", "serde"] }
-serde_json = { version = "1.0.*", default-features = false, features = ["std"] }
+ciborium = { version = "0.2.*", default-features = false, features = ["std"] }
 redis = { version = "0.23.*", default-features = false, features = ["serde", "aio", "tokio-comp"] }
 redlock = { version = "2.0.*", default-features = false }
 tracing = { version = "0.1.*", default-features = false, features = ["attributes"] }

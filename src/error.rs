@@ -14,8 +14,14 @@ impl From<redis::RedisError> for CacheError {
     }
 }
 
-impl From<serde_json::Error> for CacheError {
-    fn from(value: serde_json::Error) -> Self {
+impl<T: fmt::Debug> From<ciborium::ser::Error<T>> for CacheError {
+    fn from(value: ciborium::ser::Error<T>) -> Self {
+        Self::Serde(value.to_string())
+    }
+}
+
+impl<T: fmt::Debug> From<ciborium::de::Error<T>> for CacheError {
+    fn from(value: ciborium::de::Error<T>) -> Self {
         Self::Serde(value.to_string())
     }
 }
